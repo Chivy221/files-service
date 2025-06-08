@@ -4,6 +4,7 @@ const File = require('../models/File');
 const cache = require('../utils/cache');
 const { encrypt, decrypt } = require('../utils/crypto');
 const { sendLog } = require('../utils/logger');
+const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -13,9 +14,10 @@ router.post('/', upload.single('file'), async (req, res) => {
 try {
 const encryptedName = encrypt(req.file.originalname);
 const file = new File({
-filename: req.file.filename || 'memory',
-originalName: encryptedName,
-size: req.file.size
+  id: uuidv4(), 
+  filename: req.file.filename || 'memory',
+  originalName: encryptedName,
+  size: req.file.size
 });
 await file.save();
 cache.set(`file:${file._id}`, file);
