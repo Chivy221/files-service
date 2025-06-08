@@ -66,6 +66,9 @@ jobs:
         with:
           name: node-app
 
+      - name: Install production dependencies
+        run: npm install --only=production
+
       - name: List files before deploy (debug)
         run: ls -l
 
