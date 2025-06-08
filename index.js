@@ -18,7 +18,7 @@ useNewUrlParser: true,
 useUnifiedTopology: true,
 }).then(() => {
 app.listen(process.env.PORT, () => {
-console.log(Files service running on port ${process.env.PORT});
+console.log(`Files service running on port ${process.env.PORT}`);
 sendLog('Files service started');
 });
 }).catch(console.error);
