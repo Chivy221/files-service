@@ -18,8 +18,8 @@ originalName: encryptedName,
 size: req.file.size
 });
 await file.save();
-cache.set(file:${file._id}, file);
-sendLog(New file uploaded: ${req.file.originalname});
+cache.set(`file:${file._id}`, file);
+sendLog(`New file uploaded: ${req.file.originalname}`);
 res.status(201).json({ id: file._id });
 } catch (err) {
 console.error(err);
