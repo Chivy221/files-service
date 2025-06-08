@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use('/files', fileRoutes);
 
-app.get('/health', (, res) => res.json({ status: 'ok' }));
+app.get('/health', (_, res) => res.json({ status: 'ok' }));
 app.get('/metrics', (, res) => res.send('files_service_total_requests 42'));
 
 mongoose.connect(process.env.MONGO_URL, {
