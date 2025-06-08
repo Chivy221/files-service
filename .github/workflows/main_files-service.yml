@@ -39,8 +39,11 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
-      - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "node_modules/*"
+      - name: Remove node_modules before packaging
+        run: rm -rf node_modules
+
+      - name: Archive source code for deployment
+        run: zip -r release.zip . -x "node_modules/*" ".git/*" "release.zip"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -53,7 +56,6 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
       contents: read
@@ -65,7 +67,10 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip -o release.zip
+
+      - name: List files before deploy (debug)
+        run: ls -l
 
       - name: Login to Azure
         uses: azure/login@v2
