@@ -6,3 +6,4 @@ const fileSchema = new mongoose.Schema({
   uploadedAt: { type: Date, default: Date.now },
   size: Number
 });
+module.exports = mongoose.model('File', fileSchema);
